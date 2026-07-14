@@ -197,8 +197,11 @@
       <div class="opts" id="opts"></div>
       <div class="rationale" id="rationale"><b>Rationale</b><span id="ratText"></span></div>
       <div class="navrow">
-        <button class="btn-ghost" id="skipBtn" onclick="skip()">Skip</button>
-        <button class="btn" id="nextBtn" onclick="next()" disabled>Next</button>
+        <button class="btn-ghost" id="prevBtn" onclick="prev()" disabled>← Back</button>
+        <div style="display:flex;gap:12px">
+          <button class="btn-ghost" id="skipBtn" onclick="skip()">Skip</button>
+          <button class="btn" id="nextBtn" onclick="next()" disabled>Next</button>
+        </div>
       </div>
     </div>
   </section>
@@ -310,6 +313,7 @@ function render(){
   rat.classList.remove('show');
   document.getElementById('nextBtn').disabled = (answers[qi]===null);
   document.getElementById('nextBtn').textContent = (idx===order.length-1)?'Finish':'Next';
+  document.getElementById('prevBtn').disabled = (idx===0);
 
   // if already answered & instant mode, reveal
   if(instant && answers[qi]!==null) revealInstant(qi);
@@ -340,6 +344,7 @@ function revealInstant(qi){
 
 function skip(){ if(idx<order.length-1){idx++;render();} else finish(); }
 function next(){ if(idx<order.length-1){idx++;render();} else finish(); }
+function prev(){ if(idx>0){idx--;render();} }
 
 function finish(){
   if(timerId) clearInterval(timerId);
